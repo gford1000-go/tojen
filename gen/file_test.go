@@ -6,7 +6,7 @@ import (
 	"go/format"
 	"testing"
 
-	"github.com/aloder/tojen/run"
+	"github.com/gford1000-go/tojen/run"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 )

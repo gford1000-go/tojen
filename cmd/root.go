@@ -5,14 +5,14 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/aloder/tojen/gen"
+	"github.com/gford1000-go/tojen/gen"
 	"github.com/spf13/cobra"
 )
 
 func Execute() {
 	var packageName string
 	var genMain bool
-	var formating = true
+	var formating bool
 
 	var cmdGen = &cobra.Command{
 		Use:   "gen [path to file] [output path]",
