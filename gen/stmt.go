@@ -231,7 +231,46 @@ func fieldList(fl *ast.FieldList) []jen.Code {
 		code := jen.Id("jen")
 		code.Add(identsList(p.Names))
 		code.Add(genExpr(p.Type))
+		if p.Tag != nil {
+			code.Add(addTags(p.Tag))
+		}
 		paramsCode = append(paramsCode, code)
 	}
 	return paramsCode
+}
+
+func addTags(b *ast.BasicLit) jen.Code {
+	if b.Kind != token.STRING {
+		panic(fmt.Sprintf("Tag that is not a string? (%v)", b.Value))
+	}
+
+	var tags = []jen.Code{}
+	var k, v = "", ""
+	var f = &k
+
+	adder := func() {
+		tags = append(tags, jen.Lit(k).Op(":").Lit(v))
+		k, v = "", ""
+		f = &k
+	}
+
+	for _, r := range b.Value {
+		s := string(r)
+		switch s {
+		case "`":
+		case "\"":
+			continue
+		case " ":
+			adder()
+		case ":":
+			f = &v
+		default:
+			*f += s
+		}
+	}
+	adder()
+
+	return jen.Dot("Tag").Call(
+		jen.Map(jen.Id("string")).Id("string").Values(tags...),
+	)
 }
