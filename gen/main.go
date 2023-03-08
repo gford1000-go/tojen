@@ -25,7 +25,8 @@ func funcDecl(s *ast.FuncDecl) jen.Code {
 }
 
 var paths = map[string]string{}
-var formating = false
+
+//var formating = false
 
 // GenerateFileBytes takes an array of bytes and transforms it into jennifer
 // code

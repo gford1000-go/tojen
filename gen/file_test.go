@@ -2,6 +2,7 @@ package gen
 
 import (
 	"bytes"
+	"fmt"
 	"go/format"
 	"testing"
 
@@ -16,14 +17,14 @@ type tcg struct {
 }
 
 var tests = []tcg{
-	tcg{
+	{
 		"first",
 		`package main
 
 	func main() {}
 	`,
 	},
-	tcg{
+	{
 		"empty statement",
 		`package main
 
@@ -32,7 +33,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"defer statement",
 		`package main
 	func main() {
@@ -40,7 +41,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"var declaration",
 		`package main
 		func main() {
@@ -48,7 +49,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"multi var declaration",
 		`package main
 		func main() {
@@ -56,7 +57,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"Multiple VarDecl",
 		`package main
 
@@ -65,7 +66,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"struct",
 		`package main
 	type A struct {
@@ -77,7 +78,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"interface",
 		`package main
 	
@@ -99,7 +100,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"Map",
 		`package main
 
@@ -109,7 +110,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"Type Assert",
 		`package main
 
@@ -120,7 +121,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"If statement",
 		`package main
 	func f() int {
@@ -146,7 +147,7 @@ var tests = []tcg{
 	}
 	`,
 	},
-	tcg{
+	{
 		"switch statement Init",
 		`package main
 
@@ -159,7 +160,7 @@ var tests = []tcg{
 		}
 	}`,
 	},
-	tcg{
+	{
 		"switch statement Type",
 		`package main
 
@@ -180,7 +181,7 @@ func main() {
 }
 `,
 	},
-	tcg{
+	{
 		"switch statement Type With Init and fallthrough",
 		`package main
 
@@ -204,7 +205,7 @@ func main() {
 }
 `,
 	},
-	tcg{
+	{
 		"For Branch Statments",
 		`package main
 
@@ -227,7 +228,7 @@ End:
 }
 `,
 	},
-	tcg{
+	{
 		"Channel Tour Go Example",
 		`package main
 
@@ -250,7 +251,7 @@ func main() {
 }
 `,
 	},
-	tcg{
+	{
 		"Select",
 		`package main
 
@@ -270,7 +271,7 @@ func main() {
 }
 `,
 	},
-	tcg{
+	{
 		"imports + annon",
 		`package main
 	import (
@@ -285,7 +286,7 @@ func main() {
 	}
 `,
 	},
-	tcg{
+	{
 		"function literal",
 		`package main
 	import (
@@ -302,7 +303,7 @@ func main() {
 	}
 `,
 	},
-	tcg{
+	{
 		"Escaped Characters",
 		`package main
 
@@ -310,7 +311,7 @@ func main() {
 	print("\n")
 }`,
 	},
-	tcg{
+	{
 		"slices of slices",
 		`package main
 
@@ -331,7 +332,7 @@ func main() {
 	}
 }`,
 	},
-	tcg{
+	{
 		"Ellipsis",
 		`package main
 
@@ -349,7 +350,7 @@ func main() {
 	fmt.Println(Sum(s...))
 }`,
 	},
-	tcg{
+	{
 		"Triple Slice",
 		`package main
 
@@ -359,7 +360,7 @@ func main() {
 	println(takeOneCapOne)
 }`,
 	},
-	tcg{
+	{
 		"Fibonacci channels",
 		`package main
 
@@ -387,7 +388,7 @@ func main() {
 	}
 }`,
 	},
-	tcg{
+	{
 		"Literals",
 		`package main
 
@@ -409,7 +410,7 @@ func TestFile(t *testing.T) {
 		t.Run(tc.Name, func(t *testing.T) {
 			fmtBytes, err := format.Source([]byte(test.Code))
 			if err != nil {
-				assert.Nil(t, errors.Wrap(err, "Formating error on number: "+string(i)+" name: "+test.Name))
+				assert.Nil(t, errors.Wrap(err, "Formating error on number: "+fmt.Sprint(i)+" name: "+test.Name))
 				return
 			}
 			goFormatTest := string(fmtBytes)

@@ -1,6 +1,7 @@
 package gen
 
 import (
+	"fmt"
 	"go/ast"
 	"go/token"
 	"reflect"
@@ -52,7 +53,7 @@ func stmt(s ast.Stmt) jen.Code {
 	case *ast.RangeStmt:
 		return rangeStmt(t)
 	}
-	panic("Not Handled: " + reflect.TypeOf(s).String() + " at " + string(s.Pos()))
+	panic("Not Handled: " + reflect.TypeOf(s).String() + " at " + fmt.Sprint(s.Pos()))
 }
 
 func declStmt(t *ast.DeclStmt) jen.Code {

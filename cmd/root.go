@@ -12,7 +12,7 @@ import (
 func Execute() {
 	var packageName string
 	var genMain bool
-	var formating bool
+	var formating = true
 
 	var cmdGen = &cobra.Command{
 		Use:   "gen [path to file] [output path]",

@@ -1,6 +1,7 @@
 package gen
 
 import (
+	"fmt"
 	"go/ast"
 	"reflect"
 
@@ -74,7 +75,7 @@ func genExpr(s ast.Expr) jen.Code {
 	case *ast.ChanType:
 		return chanType(t)
 	}
-	panic("Not Handled gen expr: " + reflect.TypeOf(s).String() + " at " + string(s.Pos()))
+	panic("Not Handled gen expr: " + reflect.TypeOf(s).String() + " at " + fmt.Sprint(s.Pos()))
 }
 func ellipsis(t *ast.Ellipsis) jen.Code {
 	return jen.Dot("Op").Call(jen.Lit("...")).Add(genExpr(t.Elt))
